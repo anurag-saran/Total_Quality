@@ -1,0 +1,19 @@
+package com.myspace.total_quality;
+
+import com.myspace.total_quality.TotalQuality
+
+rule "calculateQualityResult"
+ 
+    when
+        //conditions
+        $tq : TotalQuality(accuredInterest >= 0, dealPrice >= 1, dataQualityResult == null);
+    then
+        //actions
+        Double dataQaltyRes = ($tq.getSettlementAmount() - (($tq.getDealPrice() * $tq.getTradeAmount()) + $tq.getAccuredInterest()));
+        modify( $tq) {setDataQualityResult(dataQaltyRes)};
+        System.out.println("fired rule " + kcontext.getRule().getName());
+ 
+end
+
+
+
